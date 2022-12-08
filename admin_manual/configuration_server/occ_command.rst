@@ -1547,7 +1547,7 @@ Edit a tag::
 
   sudo -u www-data php occ tag:edit --name <name> --access <access> <id>
 
-`--name` and `--access` are optional.
+``--name`` and ``--access`` are optional.
 
 Delete a tag::
 
@@ -1572,11 +1572,10 @@ invisible  No       No
 Previews
 --------
 
-A set of commands to manage previews::
+A set of commands to manage files previews::
 
  preview
   preview:delete        Delete all or a specified subset of files previews
-  preview:repair        TODO
 
 Delete
 ^^^^^^
@@ -1591,10 +1590,30 @@ The ``preview:delete`` command deletes generated previews::
  Options:
    -o, --old-only           Limit deletion to old previews (no longer having their original file)
    -m, --mimetype=MIMETYPE  Limit deletion to this mimetype, eg. --mimetype="image/jpeg"
-   -b, --batch-size         Delete previews by batches of specified number (for database access performance issue)
+   -b, --batch-size=SIZE    Delete previews by batches of specified size (for database access performance issue)
    -d, --dry                Dry mode (will not delete any files). In combination with the verbose mode one could check the operations.
    -h, --help               Display help for the given command. When no command is given display help for the list command
    -v|vv|vvv, --verbose     Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
+
+Delete all generated previews, including previews of files that no longer exist::
+
+ sudo -u www-data php occ preview:delete
+
+Only delete previews of files that no longer exist::
+
+ sudo -u www-data php occ preview:delete --old-only
+
+Only delete previews of files of a given type (here jpeg)::
+
+ sudo -u www-data php occ preview:delete --mimetype="image/jpeg"
+
+.. note:: This option is not compatible with option ``--old-only``, as mimetype of files that no longer exist cannot be determined.
+
+For database performance, delete previews by batches (here by batch of 200 files)::
+
+ sudo -u www-data php occ preview:delete --batch-size=200
+
+.. note:: This option is not compatible with option ``--dry``, as it relies on actually deleted batches to continue deleting next batches.
 
 
 .. _occ_debugging:
