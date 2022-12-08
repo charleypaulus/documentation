@@ -41,6 +41,7 @@ occ command Directory
 * :ref:`two_factor_auth_label`
 * :ref:`disable_user_label`
 * :ref:`system_tags_commands_label`
+* :ref:`preview_commands_label`
 * `Debugging`_
 
 .. _http_user_label:
@@ -1564,6 +1565,37 @@ invisible  No       No
 
 | ¹ User can see the tag
 | ² User can assign the tag to a file
+
+
+.. _preview_commands_label:
+
+Previews
+--------
+
+A set of commands to manage previews::
+
+ preview
+  preview:delete        Delete all or a specified subset of files previews
+  preview:repair        TODO
+
+Delete
+^^^^^^
+
+The ``preview:delete`` command deletes generated previews::
+
+ sudo -u www-data php occ preview:delete
+
+ Usage:
+   preview:delete [options]
+
+ Options:
+   -o, --old-only           Limit deletion to old previews (no longer having their original file)
+   -m, --mimetype=MIMETYPE  Limit deletion to this mimetype, eg. --mimetype="image/jpeg"
+   -b, --batch-size         Delete previews by batches of specified number (for database access performance issue)
+   -d, --dry                Dry mode (will not delete any files). In combination with the verbose mode one could check the operations.
+   -h, --help               Display help for the given command. When no command is given display help for the list command
+   -v|vv|vvv, --verbose     Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
+
 
 .. _occ_debugging:
 
