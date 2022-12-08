@@ -1595,25 +1595,21 @@ The ``preview:delete`` command deletes generated previews::
    -h, --help               Display help for the given command. When no command is given display help for the list command
    -v|vv|vvv, --verbose     Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
 
-Delete all generated previews, including previews of files that no longer exist::
+Delete all generated previews, including previews of files that no longer exist.
 
  sudo -u www-data php occ preview:delete
 
-Only delete previews of files that no longer exist::
+Only delete previews of files that no longer exist.
 
  sudo -u www-data php occ preview:delete --old-only
 
-Only delete previews of files of a given type (here jpeg)::
+Only delete previews of files of a given type (here jpeg). This option is not compatible with option ``--old-only``, as mimetype of files that no longer exist cannot be determined.
 
  sudo -u www-data php occ preview:delete --mimetype="image/jpeg"
 
-.. note:: This option is not compatible with option ``--old-only``, as mimetype of files that no longer exist cannot be determined.
-
-For database performance, delete previews by batches (here by batch of 200 files)::
+For database performance, delete previews by batches (here by batch of 200 files). This option is not compatible with option ``--dry``, as it relies on actually deleted batches to continue deleting next batches.
 
  sudo -u www-data php occ preview:delete --batch-size=200
-
-.. note:: This option is not compatible with option ``--dry``, as it relies on actually deleted batches to continue deleting next batches.
 
 
 .. _occ_debugging:
