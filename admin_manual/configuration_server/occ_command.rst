@@ -1580,36 +1580,29 @@ A set of commands to manage files previews::
 Delete
 ^^^^^^
 
-The ``preview:delete`` command deletes generated previews::
+The ``preview:delete`` command deletes all or a selected subset of generated previews.
+
+By default, ``preview:delete`` deletes all generated previews, including previews of files that no longer exist::
 
  sudo -u www-data php occ preview:delete
 
- Usage:
-   preview:delete [options]
-
- Options:
-   -o, --old-only           Limit deletion to old previews (no longer having their original file)
-   -m, --mimetype=MIMETYPE  Limit deletion to this mimetype, eg. --mimetype="image/jpeg"
-   -b, --batch-size=SIZE    Delete previews by batches of specified size (for database access performance issue)
-   -d, --dry                Dry mode (will not delete any files). In combination with the verbose mode one could check the operations.
-   -h, --help               Display help for the given command. When no command is given display help for the list command
-   -v|vv|vvv, --verbose     Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
-
-Delete all generated previews, including previews of files that no longer exist::
-
- sudo -u www-data php occ preview:delete
-
-Only delete previews of files that no longer exist::
+Use option ``--old-only`` to only delete previews of files that no longer exist::
 
  sudo -u www-data php occ preview:delete --old-only
 
-Only delete previews of files of a given type (here jpeg) (This option is not compatible with option ``--old-only``, as mimetype of files that no longer exist cannot be determined)::
+Use option ``--mimetype`` with a specified type to only delete previews of files of this type (here jpeg).
+This option is not compatible with option ``--old-only``, as mimetype of files that no longer exist cannot be determined::
 
  sudo -u www-data php occ preview:delete --mimetype="image/jpeg"
 
-For database performance, delete previews by batches (here by batch of 200 files) (This option is not compatible with option ``--dry``, as it relies on actually deleted batches to continue deleting next batches)::
+For database performance, you may use option ``--batch-size`` with a specified number of files to delete previews by batches (here by batch of 200 files).
+This option is not compatible with option ``--dry``, as it relies on actually deleted batches to continue deleting next batches::
 
  sudo -u www-data php occ preview:delete --batch-size=200
+
+Using option ``--dry`` will not detete any preview. Use it in combination with the verbose mode to check operations::
+
+ sudo -u www-data php occ preview:delete --dry -v
 
 
 .. _occ_debugging:
